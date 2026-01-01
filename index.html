@@ -118,6 +118,17 @@
             font-size: 1.05em;
         }
 
+        .profile-image {
+            border-radius: 10px;
+            max-width: 100%;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.02);
+        }
+
         .skills {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -277,7 +288,7 @@
                     </p>
                 </div>
                 <div>
-                    <img src="https://via.placeholder.com/300x300?text=Balaji+S" alt="Profile" style="border-radius: 10px; max-width: 100%;">
+                    <img src="profile.jpeg" alt="Balaji S - Full Stack Developer" class="profile-image">
                 </div>
             </div>
         </section>
