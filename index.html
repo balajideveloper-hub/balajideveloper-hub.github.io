@@ -600,6 +600,9 @@
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
         }
 
         .contact-item:hover {
@@ -607,15 +610,49 @@
             border-color: var(--primary-color);
         }
 
+        .contact-item:active {
+            transform: translateY(-2px);
+        }
+
         .contact-item i {
             font-size: 24px;
             color: var(--primary-color);
         }
 
-        .contact-item a {
+        .contact-item a,
+        .contact-item span {
             color: var(--light-text);
             text-decoration: none;
             font-weight: 500;
+        }
+
+        .copyable {
+            cursor: copy;
+        }
+
+        /* Copy toast notification */
+        .copy-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--gradient-1);
+            color: var(--light-text);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 40px rgba(108, 99, 255, 0.6);
+            z-index: 10000;
+            opacity: 0;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
         /* Footer */
@@ -733,6 +770,12 @@
 </head>
 <body>
     <div class="animated-bg"></div>
+
+    <!-- Copy Toast Notification -->
+    <div class="copy-toast" id="copyToast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Copied to clipboard!</span>
+    </div>
 
     <nav>
         <div class="logo">Balaji.dev</div>
@@ -954,11 +997,11 @@
             </div>
 
             <div class="contact-info">
-                <div class="contact-item">
+                <div class="contact-item copyable" data-copy="bala.developer07@gmail.com" title="Click or long-press to copy">
                     <i class="fas fa-envelope"></i>
                     <a href="mailto:bala.developer07@gmail.com">bala.developer07@gmail.com</a>
                 </div>
-                <div class="contact-item">
+                <div class="contact-item copyable" data-copy="@__the_._black__" title="Click or long-press to copy">
                     <i class="fab fa-instagram"></i>
                     <a href="https://www.instagram.com/__the_._black__/" target="_blank">@__the_._black__</a>
                 </div>
@@ -1011,6 +1054,84 @@
             } else {
                 nav.style.background = 'rgba(10, 14, 39, 0.8)';
             }
+        });
+
+        // Copy to clipboard functionality
+        function showToast(message) {
+            const toast = document.getElementById('copyToast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function copyToClipboard(text, label) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast(`${label} copied to clipboard!`);
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                    fallbackCopy(text, label);
+                });
+            } else {
+                fallbackCopy(text, label);
+            }
+        }
+
+        function fallbackCopy(text, label) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-9999px';
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast(`${label} copied to clipboard!`);
+            } catch (err) {
+                console.error('Fallback copy failed:', err);
+                showToast('Copy failed. Please try again.');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // Add click and long-press listeners to copyable elements
+        document.querySelectorAll('.copyable').forEach(element => {
+            let pressTimer;
+            
+            // Click event for desktop
+            element.addEventListener('click', function(e) {
+                const textToCopy = this.getAttribute('data-copy');
+                const label = textToCopy.includes('@') && !textToCopy.includes('.') ? 'Instagram ID' : 'Email';
+                copyToClipboard(textToCopy, label);
+            });
+            
+            // Long-press for mobile
+            element.addEventListener('touchstart', function(e) {
+                pressTimer = setTimeout(() => {
+                    const textToCopy = this.getAttribute('data-copy');
+                    const label = textToCopy.includes('@') && !textToCopy.includes('.') ? 'Instagram ID' : 'Email';
+                    copyToClipboard(textToCopy, label);
+                    
+                    // Haptic feedback for mobile
+                    if (navigator.vibrate) {
+                        navigator.vibrate(50);
+                    }
+                }, 500);
+            });
+            
+            element.addEventListener('touchend', function() {
+                clearTimeout(pressTimer);
+            });
+            
+            element.addEventListener('touchmove', function() {
+                clearTimeout(pressTimer);
+            });
         });
     </script>
 </body>
