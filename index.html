@@ -21,6 +21,7 @@
             --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --instagram-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
         }
 
         * {
@@ -538,6 +539,7 @@
             justify-content: center;
             gap: 30px;
             margin-bottom: 40px;
+            flex-wrap: wrap;
         }
 
         .social-link {
@@ -553,13 +555,33 @@
             font-size: 24px;
             text-decoration: none;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .social-link:hover {
             transform: translateY(-5px);
-            border-color: var(--primary-color);
-            background: var(--primary-color);
             box-shadow: 0 10px 30px rgba(108, 99, 255, 0.5);
+        }
+
+        .social-link.github:hover {
+            border-color: #333;
+            background: #333;
+        }
+
+        .social-link.linkedin:hover {
+            border-color: #0077b5;
+            background: #0077b5;
+        }
+
+        .social-link.email:hover {
+            border-color: #ea4335;
+            background: #ea4335;
+        }
+
+        .social-link.instagram:hover {
+            border-color: transparent;
+            background: var(--instagram-gradient);
+            box-shadow: 0 10px 30px rgba(225, 48, 108, 0.5);
         }
 
         .contact-info {
@@ -672,6 +694,10 @@
 
             .stats-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                gap: 20px;
             }
         }
 
@@ -913,13 +939,16 @@
             <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Let's connect!</p>
             
             <div class="social-links">
-                <a href="https://github.com/balajideveloper-hub" target="_blank" class="social-link">
+                <a href="https://github.com/balajideveloper-hub" target="_blank" class="social-link github" title="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/balajideveloper/" target="_blank" class="social-link">
+                <a href="https://www.linkedin.com/in/balajideveloper/" target="_blank" class="social-link linkedin" title="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a href="mailto:bala.developer07@gmail.com" class="social-link">
+                <a href="https://www.instagram.com/__the_._black__/" target="_blank" class="social-link instagram" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="mailto:bala.developer07@gmail.com" class="social-link email" title="Email">
                     <i class="fas fa-envelope"></i>
                 </a>
             </div>
@@ -928,6 +957,10 @@
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
                     <a href="mailto:bala.developer07@gmail.com">bala.developer07@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-instagram"></i>
+                    <a href="https://www.instagram.com/__the_._black__/" target="_blank">@__the_._black__</a>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
