@@ -4,7 +4,7 @@ Personal portfolio website showcasing projects and skills
 
 ## 🌐 Live Site
 
-**Visit the portfolio:** [https://balajideveloper-hub.github.io](https://balajideveloper-hub.github.io)
+**Visit the portfolio:** [https://balajideveloper-hub.github.io](https://oldprotfolio.balajitechlab.com/)
 
 ## 📋 About
 
